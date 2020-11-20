@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: petclinic-deploy
+  namespace: default
+  labels:
+    app: petclinic
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: petclinic
+  template:
+    metadata:
+      labels:
+        app: petclinic
+    spec:
+      containers:
+        - name: petclinic
+          image: skekf123/petclinic:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /manage/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            failureThreshold: 3
+            periodSeconds: 10
+          volumeMounts:
+            - mountPath: /logs
+              name: log-dir
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      restartPolicy: Always
+      terminationGracePeriodSeconds : 30
+      volumes:
+        - name: log-dir
+          hostPath:
+            path: /logs
