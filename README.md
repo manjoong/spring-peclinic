@@ -23,7 +23,7 @@ git clone https://github.com/manjoong/petclinic.git
 3. build 시작(build dir 생성 확인)
 <pre>
 <code>
-./gradlew build
+./gradlew bootjar
 </code>
 </pre> 
 4. jib plugin을 통한 이미지 배포(skekf123/petclinic:latest로 배포)
