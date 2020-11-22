@@ -10,7 +10,7 @@
 1. git clone
 <pre>
 <code>
-git clone https://github.com/manjoong/petclinic.git
+git clone https://github.com/manjoong/spring-petclinic.git
 </code>
 </pre>
 
